@@ -73,22 +73,8 @@ const createSaveBtn = (saveUrl) => {
   link.id = 'save-link';
   link.classList = 'bg-green-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-1/3 m-auto my-5';
   link.innerHTML = 'Save Image';
-
-  link.addEventListener('click', () => {
-    fetch(saveUrl)
-      .then(response => response.blob())
-      .then(blob => {
-        const blobUrl = URL.createObjectURL(blob);
-        const tempLink = document.createElement('a');
-        tempLink.href = blobUrl;
-        tempLink.download = 'qrcode.png';
-        tempLink.style.display = 'none';
-        document.body.appendChild(tempLink);
-        tempLink.click();
-        document.body.removeChild(tempLink);
-        URL.revokeObjectURL(blobUrl);
-      });
-  });
+  link.href = saveUrl;
+  link.download = 'qrcode.png';
 
   document.getElementById('generated').appendChild(link);
 };
