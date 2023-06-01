@@ -75,17 +75,24 @@ const createSaveBtn = (saveUrl) => {
   link.innerHTML = 'Save Image';
 
   link.addEventListener('click', () => {
-    const tempLink = document.createElement('a');
-    tempLink.href = saveUrl;
-    tempLink.download = 'qrcode.png';
-    tempLink.style.display = 'none';
-    document.body.appendChild(tempLink);
-    tempLink.click();
-    document.body.removeChild(tempLink);
+    fetch(saveUrl)
+      .then(response => response.blob())
+      .then(blob => {
+        const blobUrl = URL.createObjectURL(blob);
+        const tempLink = document.createElement('a');
+        tempLink.href = blobUrl;
+        tempLink.download = 'qrcode.png';
+        tempLink.style.display = 'none';
+        document.body.appendChild(tempLink);
+        tempLink.click();
+        document.body.removeChild(tempLink);
+        URL.revokeObjectURL(blobUrl);
+      });
   });
 
   document.getElementById('generated').appendChild(link);
 };
+
 
 hideSpinner();
 
