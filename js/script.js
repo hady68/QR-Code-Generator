@@ -71,11 +71,19 @@ const hideSpinner = () => {
 const createSaveBtn = (saveUrl) => {
   const link = document.createElement('a');
   link.id = 'save-link';
-  link.classList =
-    'bg-green-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-1/3 m-auto my-5';
-  link.href = saveUrl;
-  link.download = 'qrcode';
+  link.classList = 'bg-green-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-1/3 m-auto my-5';
   link.innerHTML = 'Save Image';
+
+  link.addEventListener('click', () => {
+    const tempLink = document.createElement('a');
+    tempLink.href = saveUrl;
+    tempLink.download = 'qrcode.png';
+    tempLink.style.display = 'none';
+    document.body.appendChild(tempLink);
+    tempLink.click();
+    document.body.removeChild(tempLink);
+  });
+
   document.getElementById('generated').appendChild(link);
 };
 
