@@ -23,7 +23,7 @@ const onGenerateSubmit = (e) => {
       // Generate the save button after the qr code image src is ready
       setTimeout(() => {
         // Get save url
-        const saveUrl = qr.querySelector('img').src;
+        const saveUrl = qr.querySelector("canvas").toDataURL();
         // Create save button
         createSaveBtn(saveUrl);
       }, 50);
